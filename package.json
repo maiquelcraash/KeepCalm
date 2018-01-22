@@ -1,0 +1,11 @@
+{
+  "name": "twitter-miner",
+  "version": "1.0.0",
+  "description": "Tweets miner to the KeepCalm training database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Maiquel Jardel Ludwig (mludwig@universo.univates.br)",
+  "license": "ISC"
+}
