@@ -6,7 +6,10 @@
 	"use strict";
 
 	let Twitter = require('twitter'),
-		properties = require('./properties');
+		rawTweetModel = require('./model/rawTweetDBModel'),
+		mongoose = require('mongoose'),
+		properties = require('./config/properties'),
+		db = mongoose.connect(properties.MONGODB_CONFIG.mongoUrl);
 
 	let client = new Twitter({
 		consumer_key: properties.TWITTER_KEY,
@@ -15,18 +18,24 @@
 		access_token_secret: properties.TWITTER_TOKEN_SECRET
 	});
 
-	let params = {
+
+	//save hangry tweets
+	let hangryParams = {
 		q: properties.HANGRY_WORDS.join(" OR "),
 		tweet_mode: 'extended',
 		count: 100,
-
 	};
+	getTweets(hangryParams, "Agressivo");
 
-	let count = 0;
+	//save normal tweets
+	let normalParams = {
+		tweet_mode: 'extended',
+		geocode:'-23.5505199,-46.6333094,400km',
+		count: 100,
+	};
+	getTweets(normalParams, "Não Agressivo");
 
-	getTweets(params);
-
-	function getTweets(params, next_id) {
+	function getTweets(params, classification, next_id) {
 		params.max_id = next_id;
 		client.get('search/tweets', params, (err, tweets, response) => {
 			if (err) {
@@ -39,21 +48,31 @@
 				});
 
 				curTweets.forEach((tweet) => {
-					console.log(tweet.full_text + "\n" + tweet.id + "\n ################################");
-					count++;
+
+					let rawTweet = new rawTweetModel();
+					rawTweet.id = tweet.id;
+					rawTweet.text = tweet.full_text;
+					rawTweet.classification = classification;
+					rawTweet.datetime = new Date(tweet.created_at);
+
+					rawTweet.save((err, newTweet) => {
+						if (err){
+							console.log(err);
+						}
+						else {
+							console.log("Salvo tweet " + newTweet.id);
+						}
+					})
 				});
 
 				try {
 					let next_result = tweets.search_metadata.next_results.split("max_id=")[1].split("&")[0];
-					console.log("\n\n\n\n" + count + "\n\n\n\n");
-					getTweets(params, Number(next_result));
+					getTweets(params, classification, Number(next_result));
 				}
 				catch (ex) {
-					console.log("\n\n\n\n\nTerminou com " + count + " Tweets encontrados.");
-
+					console.log(ex);
 				}
 			}
 		})
 	}
-
 }());

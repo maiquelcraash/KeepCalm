@@ -21,6 +21,9 @@
 		'bosta',
 		'porra',
 		'puta'
-	]
+	];
 
+	exports.MONGODB_CONFIG = {
+		"mongoUrl": "mongodb://localhost:27017/KeepCalm",
+	}
 }());
