@@ -8,14 +8,18 @@
 	let mongoose = require("mongoose"),
 		Schema = mongoose.Schema;
 
-	let rawTweetSchema = new Schema({
+	let posTweetSchema = new Schema({
 		id: {
 			type: Number,
 			required: true,
 			unique: true,
 			dropDups: true
 		},
-		text: {
+		original_text: {
+			type: String,
+			required: true
+		},
+		pos_text: {
 			type: String,
 			required: true
 		},
@@ -26,9 +30,14 @@
 		datetime: {
 			type: Date,
 			required: true
+		},
+		processed: {
+			type: Boolean,
+			required: true,
+			default: false
 		}
 	});
 
-	module.exports = mongoose.model('RawTweet', rawTweetSchema);
+	module.exports = mongoose.model('PosTweet', posTweetSchema);
 
 }());

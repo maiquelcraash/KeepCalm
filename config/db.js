@@ -1,9 +1,35 @@
-//database connections
+/**
+ * Created by maiquel on 26/01/18.
+ */
 
-let mongoose = require('mongoose'),
-	properties = require('./properties');
+(function () {
+	"use strict";
 
-module.exports = callback => {
-	let db = mongoose.connect(properties.MONGODB_CONFIG.mongoUrl);
-	callback(db)																//calls the callback passing the new connection
-};
+	const mongoose = require('mongoose'),
+		properties = require('../config/properties');
+
+	let connection = null;
+
+	let db = () => {
+
+		let getConnection = () => {
+			connection = mongoose.connect(properties.MONGODB_CONFIG.mongoUrl);
+			return connection;
+		};
+
+		let closeConnection = () => {
+			if (connection) {
+				connection.close();
+				connection = null;
+			}
+		};
+
+		return {
+			getConnection: getConnection,
+			closeConnection: closeConnection
+		}
+	};
+
+	module.exports = db();
+
+}());
