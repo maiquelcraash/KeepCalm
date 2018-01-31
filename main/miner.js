@@ -6,7 +6,10 @@
 	"use strict";
 
 	const twitterController = require('../controller/twitterController'),
+		db = require('../config/db'),
 		properties = require("../config/properties");
+
+	db.getConnection();
 
 	//save hangry tweets
 	let hangryParams = {
@@ -22,7 +25,7 @@
 		count: 100,
 	};
 
-	twitterController.getTweets(hangryParams, "Agressivo");
-	twitterController.getTweets(normalParams, "Não Agressivo");
+	twitterController.getTweetsFromTwitter(hangryParams, "Agressivo");
+	// twitterController.getTweetsFromTwitter(normalParams, "Não Agressivo");
 
 }());

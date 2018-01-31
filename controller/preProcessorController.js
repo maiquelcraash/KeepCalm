@@ -6,8 +6,8 @@
 	"use strict";
 
 	const natural = require('natural'),
-		mongoose = require('mongoose'),
 		processedTweetModel = require('../model/processedTweetModel'),
+		db = require('../config/db'),
 		properties = require('../config/properties');
 
 	let preProcessorControler = () => {
@@ -87,8 +87,7 @@
 			}
 		};
 
-		let saveTweetOnDatabase = (posTweet) => {
-
+		let savePosTweetOnDatabase = (posTweet, callback) => {
 			posTweet.save((err, newTweet) => {
 				if (err) {
 					console.log(err);
@@ -96,12 +95,15 @@
 				else {
 					console.log("Salvo tweet processado " + posTweet.id);
 				}
+				if (callback) callback();
+
 			});
 		};
 
+
 		return {
 			preProcess: preProcess,
-			saveTweetOnDatabase: saveTweetOnDatabase
+			savePosTweetOnDatabase: savePosTweetOnDatabase
 		}
 	};
 

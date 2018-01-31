@@ -7,9 +7,7 @@
 
 	const Twitter = require('twitter'),
 		rawTweetModel = require('../model/rawTweetModel'),
-		mongoose = require('mongoose'),
-		properties = require('../config/properties'),
-		db = require('../config/db');
+		properties = require('../config/properties');
 
 
 	let client = new Twitter({
@@ -21,7 +19,7 @@
 
 	let twitterController = () => {
 
-		let getTweets = (params, classification, next_id) => {
+		let getTweetsFromTwitter = (params, classification, next_id) => {
 			params.max_id = next_id;
 			client.get('search/tweets', params, (err, tweets, response) => {
 				if (err) {
@@ -41,7 +39,6 @@
 						rawTweet.classification = classification;
 						rawTweet.datetime = new Date(tweet.created_at);
 
-						let connection = db.getConnection();
 						rawTweet.save((err, newTweet) => {
 							if (err) {
 								console.log(err);
@@ -54,7 +51,7 @@
 
 					try {
 						let next_result = tweets.search_metadata.next_results.split("max_id=")[1].split("&")[0];
-						getTweets(params, classification, Number(next_result));
+						getTweetsFromTwitter(params, classification, Number(next_result));
 					}
 					catch (ex) {
 						console.log(ex);
@@ -63,8 +60,29 @@
 			})
 		};
 
+		let getRawTweetsFromDatabase = (params, callback) => {
+			rawTweetModel.find(params, (err, tweets) => {
+				if(err){
+					console.log(err)
+				}
+				callback(tweets);
+			})
+		};
+
+		let updateRawTweet = (rawTweet) => {
+			rawTweet.save((err) => {
+				if (err) {
+					console.log(err);
+				}
+			})
+		};
+
+
+
 		return {
-			getTweets: getTweets
+			getTweetsFromTwitter: getTweetsFromTwitter,
+			getRawTweetsFromDatabase: getRawTweetsFromDatabase,
+			updateRawTweet: updateRawTweet
 		}
 	};
 

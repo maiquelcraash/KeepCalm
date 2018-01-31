@@ -19,7 +19,7 @@
 
 		let closeConnection = () => {
 			if (connection) {
-				connection.close();
+				mongoose.connection.close();
 				connection = null;
 			}
 		};
