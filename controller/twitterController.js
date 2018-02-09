@@ -7,6 +7,7 @@
 
 	const Twitter = require('twitter'),
 		rawTweetModel = require('../model/rawTweetModel'),
+		posTweetModel = require('../model/processedTweetModel'),
 		properties = require('../config/properties');
 
 
@@ -62,10 +63,23 @@
 
 		let getRawTweetsFromDatabase = (params, callback) => {
 			rawTweetModel.find(params, (err, tweets) => {
-				if(err){
+				if (err) {
 					console.log(err)
 				}
-				callback(tweets);
+				else {
+					callback(tweets);
+				}
+			})
+		};
+
+		let getPosTweetsFromDatabase = (params, callback) => {
+			posTweetModel.find(params, (err, tweets) => {
+				if (err) {
+					console.log(err)
+				}
+				else {
+					callback(tweets);
+				}
 			})
 		};
 
@@ -78,10 +92,10 @@
 		};
 
 
-
 		return {
 			getTweetsFromTwitter: getTweetsFromTwitter,
 			getRawTweetsFromDatabase: getRawTweetsFromDatabase,
+			getPosTweetsFromDatabase: getPosTweetsFromDatabase,
 			updateRawTweet: updateRawTweet
 		}
 	};

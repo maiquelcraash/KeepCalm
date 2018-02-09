@@ -7,6 +7,7 @@
 
 	/* Server Settings */
 	exports.SERVER_PORT = 8082;
+	exports.BODY_LIMIT = "100kb";
 
 	/* Twitter Authentication */
 	exports.TWITTER_KEY = 'BxiQLE4OPPmmRvgw5aC9yKqST';

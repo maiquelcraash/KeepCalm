@@ -26,6 +26,6 @@
 	};
 
 	twitterController.getTweetsFromTwitter(hangryParams, "Agressivo");
-	// twitterController.getTweetsFromTwitter(normalParams, "Não Agressivo");
+	twitterController.getTweetsFromTwitter(normalParams, "Não Agressivo");
 
 }());
