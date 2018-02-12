@@ -59,13 +59,17 @@
 			/* Removes remaining symbols */
 			function removeSymbols(str) {
 
-				str = str.replace(/[\n\r]/g, ' ');
+				let words = str.split(' ').map((word) => {
+					word = word.replace(/[\n\r]/g, ' ');
 
-				let symbols = ['.', ',', ';', '!', '?'].forEach((symbol) => {
-					str = str.replace(symbol, '');
+					['.', '..', '...', '....', ',', ';', '!', '!!', '?', '??', '???', ':', '"', "\\", "-", '“', "'", '\'', ''].forEach((symbol) => {
+						word = word.replace(symbol, '');
+					});
+
+					return word;
 				});
 
-				return str;
+				return words.join(' ');
 			}
 
 			function removeStopWords(str) {

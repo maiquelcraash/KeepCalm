@@ -16,16 +16,23 @@
 		q: properties.HANGRY_WORDS.join(" OR "),
 		tweet_mode: 'extended',
 		count: 100,
+		lang: "pt"
 	};
+
+
+	let q = properties.HANGRY_WORDS.map((word) => {
+		return "-" + word;
+	});
 
 	//save normal tweets
 	let normalParams = {
+		q: q.join(" "),
 		tweet_mode: 'extended',
-		geocode: '-23.5505199,-46.6333094,50km',
 		count: 100,
+		lang: "pt",
 	};
 
-	twitterController.getTweetsFromTwitter(hangryParams, "Agressivo");
+	//twitterController.getTweetsFromTwitter(hangryParams, "Agressivo");
 	twitterController.getTweetsFromTwitter(normalParams, "Não Agressivo");
 
 }());

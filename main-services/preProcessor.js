@@ -13,7 +13,7 @@
 
 	//process only not processed items
 	let params = {
-		processed: false
+		// processed: false
 	};
 
 	twitterController.getRawTweetsFromDatabase(params, (rawTweets) => {

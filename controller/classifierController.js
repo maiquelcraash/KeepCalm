@@ -6,7 +6,8 @@
 	"use strict";
 
 	const natural = require('natural'),
-		twitterController = require('./twitterController');
+		twitterController = require('./twitterController'),
+		properties = require('../config/properties');
 
 	let classifier;
 
@@ -27,9 +28,27 @@
 		let getClassification = (target) => {
 			let result = classifier.classify(target);
 			let details = classifier.getClassifications(target);
+			let percentuals = {};
+
+			let tt = details.reduce((sum, feature) => {
+				return sum + feature.value;
+			}, 0);
+
+			details.forEach((feature) => {
+				let number = Intl.NumberFormat('pt-PT', {maximumFractionDigits: 2}).format(feature.value / tt * 100);
+				percentuals[feature.label] = number;
+			});
+
+			let effectiveResult = "Não Agressivo";
+			if (percentuals["Agressivo"] >= properties.EFFECTIVE_PERCENTUAL) {
+				effectiveResult = "Agressivo";
+			}
+
 			return {
 				result: result,
-				details: details
+				details: details,
+				percentuals: percentuals,
+				effectiveResult: effectiveResult
 			}
 		};
 
@@ -37,9 +56,17 @@
 			console.log("Adding documents...\n");
 
 			let params = {
-				processed: false
+				// processed: false
 			};
 			twitterController.getPosTweetsFromDatabase(params, (posTweets) => {
+
+				//todo retirar
+				// posTweets = posTweets.filter((tweet) => {
+				// 	return tweet.id % 5 === 0;
+				// });
+
+				console.log(posTweets.length);
+
 				posTweets.forEach((tweet) => {
 					console.log(tweet.id);
 					classifier.addDocument(tweet.pos_text, tweet.classification);

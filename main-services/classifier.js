@@ -22,6 +22,7 @@
 	}));
 
 	classifierController.trainBayesClassifier(() => {
+	// classifierController.trainLogisticRegressionClassifier(() => {
 		app.server.listen(properties.SERVER_PORT);
 		console.log("Server started on port " + properties.SERVER_PORT);
 	});
