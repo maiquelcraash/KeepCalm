@@ -62,8 +62,6 @@
 			};
 			twitterController.getPosTweetsFromDatabase(params, (posTweets) => {
 
-				console.log(posTweets.length);
-
 				posTweets.forEach((tweet) => {
 					console.log(tweet.id);
 					classifier.addDocument(tweet.pos_text, tweet.classification);
@@ -74,8 +72,6 @@
 				console.log("\nReady!");
 				callback();
 			});
-
-
 		}
 
 		return {
