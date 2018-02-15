@@ -31,3 +31,6 @@ Todos os serviços podem ser localizados e iniciados a partir da pasta *main-ser
     
 ### Conclusões Prévias
  - O método da regressão logística consome muito mais memória que o método de Bayes, pois precisa manter o campo amostral completo. Exito obtido apenas com uma limitação em 5 mil registros no treinamento e leva muitos minutos para treinar.
+ 
+### Agradecimentos
+ - diegodorgam pelo PosTagger em português. https://github.com/diegodorgam/postagger

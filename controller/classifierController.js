@@ -7,6 +7,7 @@
 
 	const natural = require('natural'),
 		twitterController = require('./twitterController'),
+		POSTaggerController = require('./POSTaggerController'),
 		properties = require('../config/properties');
 
 	let classifier;
@@ -48,7 +49,8 @@
 				result: result,
 				details: details,
 				percentuals: percentuals,
-				effectiveResult: effectiveResult
+				effectiveResult: effectiveResult,
+				pos_tag: POSTaggerController.getPOSTags(target)
 			}
 		};
 
@@ -59,11 +61,6 @@
 				// processed: false
 			};
 			twitterController.getPosTweetsFromDatabase(params, (posTweets) => {
-
-				//todo retirar
-				// posTweets = posTweets.filter((tweet) => {
-				// 	return tweet.id % 5 === 0;
-				// });
 
 				console.log(posTweets.length);
 
