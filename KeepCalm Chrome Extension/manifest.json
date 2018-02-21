@@ -4,13 +4,14 @@
   "description": "Esta extensão exibe um lindo gatinho!",
   "version": "1.0",
   "browser_action": {
-    "default_icon": "icon.png",
     "default_popup": "popup.html",
     "default_title": "Clique aqui para ver um lindo gatinho!"
   },
   "permissions": [
     "activeTab",
-    "https://ajax.googleapis.com/"
+    "https://ajax.googleapis.com/",
+    "declarativeContent",
+    "http://*/*", "https://*/*"
   ],
   "content_scripts": [
     {
@@ -19,9 +20,14 @@
         "https://*/*"
       ],
       "js": [
-        "js/lib/lodash.js",
-        "js/watcher.js"
+        "js/watcher.js",
+        "js/drawer.js"
       ]
     }
-  ]
+  ],
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ]
+  }
 }

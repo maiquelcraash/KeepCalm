@@ -9,23 +9,66 @@
 	let inputFields = document.querySelectorAll("input, textarea");
 
 	inputFields.forEach((inputField) => {
-		inputField.addEventListener("input", _.debounce(getClassification, 3000));
+		inputField.addEventListener("input", debounce(getClassification, 2000));
 	});
 
-	function getClassification(target) {
+
+	/**
+	 * Makes a request to server to obtain classification for the text inputed on target element and event
+	 */
+	function getClassification() {
 		console.log("Obtendo classificação...");
 
-		let xmlHttp = new XMLHttpRequest();
-		xmlHttp.open("POST", serverHost, true); // false for synchronous request
-		xmlHttp.setRequestHeader('Content-Type', 'application/json');
+		let target = this.value;
 
-		xmlHttp.onload = function (data) {
-			let results = JSON.parse(xmlHttp.responseText);
-			console.log(results);
-			console.log(data);
+		if (target) {
+			let xmlHttp = new XMLHttpRequest();
+			xmlHttp.open("POST", serverHost, true); // false for synchronous request
+			xmlHttp.setRequestHeader('Content-Type', 'application/json');
+
+			xmlHttp.onload = function (data) {
+				let results = JSON.parse(xmlHttp.responseText);
+				console.log(results);
+
+				let color = "green";
+
+				if (results.effectiveResult === "Agressivo") {
+					color = "red";
+				}
+
+				let imageData = createIconImageData(color);
+
+				//sends a message to the background script
+				chrome.runtime.sendMessage({iconImageData: imageData}, function(response) {
+					console.log(response.status);
+				});
+			};
+
+			xmlHttp.send(JSON.stringify({"target": target}));
+		}
+	}
+
+	/**
+	 * REF: https://davidwalsh.name/javascript-debounce-function
+	 * @param func funtion to be execute
+	 * @param wait delay time em milis
+	 * @param immediate boolean
+	 * @returns {Function}
+	 */
+	function debounce(func, wait, immediate) {
+		let timeout;
+		return function () {
+			let context = this;
+			let args = arguments;
+			let later = function () {
+				timeout = null;
+				if (!immediate) func.apply(context, args);
+			};
+			let callNow = immediate && !timeout;
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+			if (callNow) func.apply(context, args);
 		};
-
-		xmlHttp.send(JSON.stringify({"target": "Teste de frase linda"}));
 	}
 
 }());
