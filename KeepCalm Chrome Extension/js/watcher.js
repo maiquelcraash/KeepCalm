@@ -12,6 +12,11 @@
 		inputField.addEventListener("input", debounce(getClassification, 2000));
 	});
 
+	let style = document.createElement('style');
+	style.type = 'text/css';
+	style.innerHTML = '.keepcalm-agressive { border-color: red; border-width: 3px; border-radius: 3px; }';
+	document.getElementsByTagName('head')[0].appendChild(style);
+
 
 	/**
 	 * Makes a request to server to obtain classification for the text inputed on target element and event
@@ -19,9 +24,10 @@
 	function getClassification() {
 		console.log("Obtendo classificação...");
 
-		let target = this.value;
+		let targetField = this;
+		let targetText = this.value;
 
-		if (target) {
+		if (targetText) {
 			let xmlHttp = new XMLHttpRequest();
 			xmlHttp.open("POST", serverHost, true); // false for synchronous request
 			xmlHttp.setRequestHeader('Content-Type', 'application/json');
@@ -29,22 +35,24 @@
 			xmlHttp.onload = function (data) {
 				let results = JSON.parse(xmlHttp.responseText);
 				console.log(results);
-
-				let color = "green";
+				let iconColor = "green";
 
 				if (results.effectiveResult === "Agressivo") {
-					color = "red";
+					iconColor = "red";
+					targetField.classList.add("keepcalm-agressive");
+				}
+				else {
+					iconColor = "green";
+					targetField.classList.remove("keepcalm-agressive");
 				}
 
-				let imageData = createIconImageData(color);
-
 				//sends a message to the background script
-				chrome.runtime.sendMessage({iconImageData: imageData}, function(response) {
+				chrome.runtime.sendMessage({color: iconColor}, function(response) {
 					console.log(response.status);
 				});
 			};
 
-			xmlHttp.send(JSON.stringify({"target": target}));
+			xmlHttp.send(JSON.stringify({"target": targetText}));
 		}
 	}
 

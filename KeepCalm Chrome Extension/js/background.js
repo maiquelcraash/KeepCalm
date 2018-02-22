@@ -1,18 +1,31 @@
 /**
  *
- * @param iconImageData ImageData file to be set as icon
+ * @param color to paint the icon
  * @param tab	the tab of the brawser to set the icon
  */
-function alterIcon(iconImageData, tab) {
-	//need to re-parse the ImageData because the message mecanism has persed it to JSON and the primitive values had lost
-	let id = new ImageData(new Uint8ClampedArray(Object.values(iconImageData.data)), 19, 19);
-
+function alterIcon(color, tab) {
 	chrome.browserAction.setIcon(
 		{
-			imageData: id,
+			imageData: createIconImageData(color),
 			tabId: tab.id
 		}
 	);
+}
+
+function createIconImageData(color) {
+	let canvas = document.createElement("canvas");
+	canvas.width = 19;
+	canvas.height = 19;
+
+	let ctx = canvas.getContext("2d");
+	ctx.fillStyle = color;
+	ctx.beginPath();
+	ctx.ellipse(9.5, 9.5, 9.5, 9.5, 0, 0, 2 * Math.PI);
+	ctx.stroke();
+	ctx.closePath();
+	ctx.fill();
+
+	return ctx.getImageData(0, 0, 19, 19);
 }
 
 
@@ -23,6 +36,6 @@ chrome.runtime.onMessage.addListener(
 			"from the extension");
 
 		sendResponse({status: "OK"});
-		let iconImageData = request.iconImageData;
-		alterIcon(iconImageData, sender.tab);
+		let color = request.color;
+		alterIcon(color, sender.tab);
 	});
