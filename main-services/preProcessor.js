@@ -13,15 +13,15 @@
 
 	//process only not processed items
 	let params = {
-		// processed: false
+		processed: false
 	};
 
 	twitterController.getRawTweetsFromDatabase(params, (rawTweets) => {
+		console.log("Getting tweets from database...");
 		rawTweets.forEach((tweet) => {
-			console.log(tweet.id);
 			let posTweet = preProcessorController.preProcess(tweet);
 			preProcessorController.savePosTweetOnDatabase(posTweet);
-			tweet.processed = false;
+			tweet.processed = true;
 			twitterController.updateRawTweet(tweet);
 		});
 	})

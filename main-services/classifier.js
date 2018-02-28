@@ -23,8 +23,8 @@
 
 	classifierController.trainBayesClassifier(() => {
 	// classifierController.trainLogisticRegressionClassifier(() => {
-		app.server.listen(properties.SERVER_PORT);
-		console.log("Server started on port " + properties.SERVER_PORT);
+		app.server.listen(properties.CLASSIFIER_SERVER_PORT);
+		console.log("Server started on port " + properties.CLASSIFIER_SERVER_PORT);
 	});
 
 	app.all('*', (req, res, next) => {
@@ -35,8 +35,12 @@
 	});
 
 	app.post('/classify', (req, res) => {
+		let ip = req.headers.host;
 		let target = req.body.target;
+
+		console.log("\nConnection from " + ip + "\n Processing: \"" + target + "\"");
 		let result = classifierController.getClassification(target);
+		console.log("Result: " + result.effectiveResult);
 
 		res.json(result);
 	});

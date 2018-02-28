@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Gatinho Instantâneo",
-  "description": "Esta extensão exibe um lindo gatinho!",
+  "name": "KeepCalm",
+  "description": "Detecção de Agressividade",
   "version": "1.0",
   "browser_action": {
     "default_popup": "popup.html",

@@ -47,12 +47,15 @@
 				}
 
 				//sends a message to the background script
-				chrome.runtime.sendMessage({color: iconColor}, function(response) {
+				chrome.runtime.sendMessage({color: iconColor}, function (response) {
 					console.log(response.status);
 				});
 			};
 
 			xmlHttp.send(JSON.stringify({"target": targetText}));
+		}
+		else {
+			targetField.classList.remove("keepcalm-agressive");
 		}
 	}
 

@@ -73,14 +73,19 @@
 		};
 
 		let getPosTweetsFromDatabase = (params, callback) => {
-			posTweetModel.find(params, (err, tweets) => {
+			const query = posTweetModel.find(params, (err, tweets) => {
 				if (err) {
 					console.log(err)
 				}
 				else {
 					callback(tweets);
 				}
-			})
+			});
+
+			if(process.env.NODE_ENV = "test"){
+				query.limit(500);
+			}
+			query.exec();
 		};
 
 		let updateRawTweet = (rawTweet) => {

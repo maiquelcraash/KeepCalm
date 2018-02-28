@@ -60,6 +60,7 @@
 			let params = {
 				// processed: false
 			};
+
 			twitterController.getPosTweetsFromDatabase(params, (posTweets) => {
 
 				posTweets.forEach((tweet) => {

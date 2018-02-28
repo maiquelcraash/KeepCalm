@@ -14,6 +14,8 @@
 
 		let preProcess = (rawTweet) => {
 
+			console.log("Pre Processing tweet: " + rawTweet.id);
+
 			let processedText = rawTweet.text.toLowerCase();
 
 			//removes trash
@@ -76,7 +78,11 @@
 			function removeSymbols(str) {
 
 				let words = str.split(' ').map((word) => {
+					//removes spaces end newlines
 					word = word.replace(/[\n\r]/g, ' ');
+
+					//removes emojis
+					word  = word.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '');
 
 					['.', '..', '...', '....', ',', ';', '!', '!!', '?', '??', '???', ':', '"', "\\", "-", '“', "'", '\'', ''].forEach((symbol) => {
 						word = word.replace(symbol, '');

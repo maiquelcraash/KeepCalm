@@ -32,7 +32,7 @@
 		lang: "pt",
 	};
 
-	//twitterController.getTweetsFromTwitter(hangryParams, "Agressivo");
-	twitterController.getTweetsFromTwitter(normalParams, "Não Agressivo");
+	twitterController.getTweetsFromTwitter(hangryParams, "Agressivo");
+	// twitterController.getTweetsFromTwitter(normalParams, "Não Agressivo");
 
 }());

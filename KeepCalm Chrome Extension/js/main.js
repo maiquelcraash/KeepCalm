@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-		var imageResult = document.getElementById('image-result');
-		var img = document.createElement("img");
+		let imageResult = document.getElementById('image-result');
+		let img = document.createElement("img");
 		img.setAttribute("src", "http://lorempixel.com/400/400/cats/");
 		// Explicitly set the width/height to minimize the number of reflows. For
 		// a single image, this does not matter, but if you're going to embed

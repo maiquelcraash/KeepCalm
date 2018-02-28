@@ -6,7 +6,10 @@
 	"use strict";
 
 	/* Server Settings */
-	exports.SERVER_PORT = 8082;
+	exports.CLASSIFIER_SERVER_PORT = 8082;
+	exports.CLASSIFIER_HOST = "localhost";
+	exports.WEB_SERVER_PORT = 8083;
+	exports.WEB_SERVER_HOST = "localhost";
 	exports.BODY_LIMIT = "100kb";
 
 	/* Twitter Authentication */
@@ -36,5 +39,5 @@
 	exports.TRASH_SYMBOLS = ['@', 'kk', 'hehe', 'shua', 'ahh', 'ahua', 'http', 'haha', '#', 'R$', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
 	/* Classifier Config */
-	exports.EFFECTIVE_PERCENTUAL = 70;
+	exports.EFFECTIVE_PERCENTUAL = 75;
 }());
