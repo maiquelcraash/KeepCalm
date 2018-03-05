@@ -82,7 +82,7 @@
 				}
 			});
 
-			if(process.env.NODE_ENV = "test"){
+			if(process.env.NODE_ENV === "test"){
 				query.limit(500);
 			}
 			query.exec();
