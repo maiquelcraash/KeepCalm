@@ -8,6 +8,7 @@
 	const natural = require('natural'),
 		twitterController = require('./twitterController'),
 		POSTaggerController = require('./POSTaggerController'),
+		activityLogController = require('./activityLogController'),
 		properties = require('../config/properties');
 
 	let classifier;
@@ -26,7 +27,7 @@
 			train(callback);
 		};
 
-		let getClassification = (target) => {
+		let getClassification = (target, callback) => {
 			let result = classifier.classify(target);
 			let details = classifier.getClassifications(target);
 			let percentuals = {};
@@ -45,14 +46,19 @@
 				effectiveResult = "Agressivo";
 			}
 
-			return {
+			let results = {
 				text: target,
 				result: result,
 				details: details,
 				percentuals: percentuals,
 				effectiveResult: effectiveResult,
 				pos_tag: POSTaggerController.getPOSTags(target)
-			}
+			};
+
+			activityLogController.createActivity(results, (newActivity) => {
+				results.activityID = newActivity._id;
+				callback(results);
+			});
 		};
 
 		function train(callback) {

@@ -10,6 +10,7 @@
 		bodyParser = require('body-parser'),
 		properties = require('../config/properties'),
 		classifierController = require('../controller/classifierController'),
+		activityLogController = require('../controller/activityLogController'),
 		db = require('../config/db');
 
 	db.getConnection();
@@ -22,7 +23,7 @@
 	}));
 
 	classifierController.trainBayesClassifier(() => {
-	// classifierController.trainLogisticRegressionClassifier(() => {
+		// classifierController.trainLogisticRegressionClassifier(() => {
 		app.server.listen(properties.CLASSIFIER_SERVER_PORT);
 		console.log("Server started on port " + properties.CLASSIFIER_SERVER_PORT);
 	});
@@ -39,10 +40,26 @@
 		let target = req.body.target;
 
 		console.log("\nConnection from " + ip + "\n Processing: \"" + target + "\"");
-		let result = classifierController.getClassification(target);
-		console.log("Result: " + result.effectiveResult);
+		classifierController.getClassification(target, (results) => {
+			console.log("Result: " + results.effectiveResult);
+			res.json(results);
+		});
+	});
 
-		res.json(result);
+	app.post('/feedback', (req, res) => {
+		let activityID = req.body.activityID;
+		let feedback = req.body.feedback;
+
+		activityLogController.updateActivity(activityID, feedback, (err) => {
+			if (err) {
+				res.status(400);
+				res.json(err);
+			}
+			else {
+				res.status(201);
+				res.json({"Status": "OK"});
+			}
+		})
 	});
 
 }());

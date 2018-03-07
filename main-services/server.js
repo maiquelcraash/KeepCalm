@@ -30,6 +30,7 @@
 		next();
 	});
 
+	/* Server Routes */
 	app.post('/classify', (req, serverRes) => {
 		let target = req.body.target;
 
@@ -42,6 +43,50 @@
 			port: properties.CLASSIFIER_SERVER_PORT,
 			method: 'POST',
 			path: "/classify",
+			headers: {
+				'Accept': 'application/json',							//CONTENT NEGOTIATION: indica ao servidor que a requisição espera um json como resposta
+				'Content-type': 'application/json'
+			}
+		};
+
+		const classifierRequest = http.request(options, (res) => {
+			const {statusCode} = res;
+
+			res.setEncoding('utf8');
+			res.on('data', (data) => {
+				serverRes.json(JSON.parse(data));
+			});
+
+		});
+
+		classifierRequest.on('error', (e) => {
+			classifierRequest.status = 400;
+			if (e.code === "ECONNREFUSED") {
+				serverRes.send({error: "Classifier is offline"})
+			}
+			else {
+				serverRes.send(e.message);
+			}
+		});
+
+		classifierRequest.end(JSON.stringify(postData));
+
+	});
+
+	app.post('/feedback', (req, serverRes) => {
+		let activityID = req.body.activityID;
+		let feedback = req.body.feedback;
+
+		const postData = {
+			activityID: activityID,
+			feedback: feedback
+		};
+
+		let options = {
+			host: properties.CLASSIFIER_HOST,
+			port: properties.CLASSIFIER_SERVER_PORT,
+			method: 'POST',
+			path: "/feedback",
 			headers: {
 				'Accept': 'application/json',							//CONTENT NEGOTIATION: indica ao servidor que a requisição espera um json como resposta
 				'Content-type': 'application/json'
