@@ -4,14 +4,15 @@
 
 (function () {
 	"use strict";
-	let serverHost = "http://localhost:8082/classify";
+	let serverHost = "http://localhost:8083/classify";
 
+	//get all input fields and apply listener
 	let inputFields = document.querySelectorAll("input, textarea");
-
 	inputFields.forEach((inputField) => {
 		inputField.addEventListener("input", debounce(getClassification, 2000));
 	});
 
+	//inject CSS style on page
 	let style = document.createElement('style');
 	style.type = 'text/css';
 	style.innerHTML = '.keepcalm-agressive { border-color: red; border-width: 3px; border-radius: 3px; }';
@@ -19,7 +20,7 @@
 
 
 	/**
-	 * Makes a request to server to obtain classification for the text inputed on target element and event
+	 * Makes a request to server to obtain classification for the text inputed on target element and event, then call the browser to update the icon and popup
 	 */
 	function getClassification() {
 		console.log("Obtendo classificação...");
@@ -35,27 +36,28 @@
 			xmlHttp.onload = function (data) {
 				let results = JSON.parse(xmlHttp.responseText);
 				console.log(results);
-				let iconColor = "green";
+				let iconColor = "gray";
 
-				if (results.effectiveResult === "Agressivo") {
-					iconColor = "red";
-					targetField.classList.add("keepcalm-agressive");
-				}
-				else {
-					iconColor = "green";
-					targetField.classList.remove("keepcalm-agressive");
+				if (results) {
+					if (results.effectiveResult === "Agressivo") {
+						iconColor = "red";
+						targetField.classList.add("keepcalm-agressive");
+					}
+					else {
+						iconColor = "green";
+						targetField.classList.remove("keepcalm-agressive");
+					}
 				}
 
-				//sends a message to the background script
-				chrome.runtime.sendMessage({color: iconColor}, function (response) {
-					console.log(response.status);
-				});
+				setIconOnTab(iconColor);
+				setResultsOnPopup(results)
 			};
-
 			xmlHttp.send(JSON.stringify({"target": targetText}));
 		}
 		else {
 			targetField.classList.remove("keepcalm-agressive");
+			setIconOnTab("gray");
+			setResultsOnPopup(null);
 		}
 	}
 
@@ -80,6 +82,24 @@
 			timeout = setTimeout(later, wait);
 			if (callNow) func.apply(context, args);
 		};
+	}
+
+	/**
+	 * Sends a message to the background script whith the icon color
+	 * @param color the be set on browser tab
+	 */
+	function setIconOnTab(color) {
+		chrome.runtime.sendMessage({method: 'setIcon', color: color}, function (response) {
+			console.log(response.status);
+		});
+	}
+
+	/**
+	 * Sends a message to the popup with the server results
+	 * @param results
+	 */
+	function setResultsOnPopup(results) {
+		chrome.runtime.sendMessage({method: 'setResults', 'results': results});
 	}
 
 }());

@@ -1,0 +1,49 @@
+//Variables
+@theme-green: #419900;
+@theme-gray: #ACACAC;
+@theme-red: #CF0B00;
+
+body {
+    font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+    font-size: 100%;
+    padding: 0 10px 0 10px;
+    width: 300px;
+}
+
+h3, h4, h5 {
+    text-align: center;
+}
+
+section#keepcalm-content {
+    display: flex;
+    .green {
+        color: @theme-green;
+    }
+
+    .red {
+        color: @theme-red;
+    }
+
+    .gray {
+        color: @theme-gray;
+    }
+
+    .thermometer {
+        display: block;
+        padding: 5px;
+        margin-top: auto;
+        margin-bottom: auto;
+        i {
+            font-size: 55pt;
+        }
+    }
+
+    .info {
+        display: block;
+        padding: 5px;
+
+        h4 {
+            font-weight: 200;
+        }
+    }
+}

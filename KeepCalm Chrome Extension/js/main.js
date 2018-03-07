@@ -1,10 +1,52 @@
 document.addEventListener('DOMContentLoaded', function () {
-		let imageResult = document.getElementById('image-result');
-		let img = document.createElement("img");
-		img.setAttribute("src", "http://lorempixel.com/400/400/cats/");
-		// Explicitly set the width/height to minimize the number of reflows. For
-		// a single image, this does not matter, but if you're going to embed
-		// multiple external images in your page, then the absence of width/height
-		// attributes causes the popup to resize multiple times.
-		imageResult.appendChild(img);
+	//gets the atual results of classifications
+	chrome.runtime.sendMessage({'method': 'getResults'}, function (response) {
+		console.log(response);
+
+		let keepcalmSection = document.getElementById("keepcalm-content"),
+			statusIcon = keepcalmSection.querySelector(".thermometer i"),
+			infoContainer = keepcalmSection.querySelector(".info");
+
+		console.log(infoContainer);
+
+		if (response) {
+			let titleElement = document.createElement('div');
+			titleElement.innerHTML = `O texto <b> "${response.text}"</b> foi classificado como:"`;
+			let resultComponent = document.createElement('h3');
+			resultComponent.innerText = response.effectiveResult;
+
+			if (response.effectiveResult === "Agressivo") {
+				clearClassList(statusIcon);
+				statusIcon.classList.add("fas", "fa-thermometer-full", "red");
+			}
+			else if (response.effectiveResult === "Não Agressivo") {
+				clearClassList(statusIcon);
+				statusIcon.classList.add("fas", "fa-thermometer-empty", "green");
+			}
+
+			infoContainer.innerHTML = "";
+			infoContainer.appendChild(titleElement);
+			infoContainer.appendChild(resultComponent);
+
+		}
+		else {
+			clearClassList(statusIcon);
+			statusIcon.classList.add("fas", "fa-thermometer-empty", "gray");
+
+			let titleElement = document.createElement('h4');
+			titleElement.innerText = "KeepCalm é um detector de conteúdo agressivo que monitora o que você digita na internet.";
+
+			infoContainer.innerHTML = "";
+			infoContainer.appendChild(titleElement)
+
+		}
+	});
 });
+
+/**
+ * Clear all classes of a Html Element
+ * @param element to be cleared
+ */
+function clearClassList(element) {
+	element.className = "";
+}

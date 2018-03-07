@@ -6,22 +6,10 @@
  -->
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Getting Started Extension's Popup</title>
-    <style>
-        body {
-            font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-            font-size: 100%;
-        }
-        
-        #status {
-            /* avoid an excessively wide status text */
-            white-space: pre;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            max-width: 400px;
-        }
-    </style>
-    
+    <link rel="stylesheet" href="lib/fonts/webfonts/fontawesome-all.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
@@ -31,8 +19,15 @@
     <script src="js/main.js"></script>
 </head>
 <body>
-    <div id="status"></div>
-    <div id="image-result">
+    <h3> KeepCalm </h3>
+    <section id="keepcalm-content">
+        <div class="thermometer">
+            <i class="fas fa-thermometer-empty green"></i>
+        </div>
+        <div class="info">
+        
+        </div>
+    </section>
 </body>
 </html>
 

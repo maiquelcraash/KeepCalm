@@ -1,8 +1,12 @@
 /**
  *
  * @param color to paint the icon
- * @param tab	the tab of the brawser to set the icon
+ * @param tab   the tab of the brawser to set the icon
  */
+
+let results = null;
+
+
 function alterIcon(color, tab) {
 	chrome.browserAction.setIcon(
 		{
@@ -35,7 +39,19 @@ chrome.runtime.onMessage.addListener(
 			"from a content script:" + sender.tab.url :
 			"from the extension");
 
-		sendResponse({status: "OK"});
-		let color = request.color;
-		alterIcon(color, sender.tab);
+		if (request.method === 'setResults') {
+			results = request.results;
+			sendResponse({status: "Results updated"});
+		}
+
+		// When we get a message from the popup
+		else if (request.method === 'getResults'){
+			sendResponse(results);
+		}
+
+		else if (request.method === 'setIcon'){
+			let color = request.color;
+			sendResponse({status: "Icon Updated"});
+			alterIcon(color, sender.tab);
+		}
 	});

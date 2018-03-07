@@ -46,6 +46,7 @@
 			}
 
 			return {
+				text: target,
 				result: result,
 				details: details,
 				percentuals: percentuals,

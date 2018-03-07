@@ -1,0 +1,39 @@
+body {
+  font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+  font-size: 100%;
+  padding: 0 10px 0 10px;
+  width: 300px;
+}
+h3,
+h4,
+h5 {
+  text-align: center;
+}
+section#keepcalm-content {
+  display: flex;
+}
+section#keepcalm-content .green {
+  color: #419900;
+}
+section#keepcalm-content .red {
+  color: #CF0B00;
+}
+section#keepcalm-content .gray {
+  color: #ACACAC;
+}
+section#keepcalm-content .thermometer {
+  display: block;
+  padding: 5px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+section#keepcalm-content .thermometer i {
+  font-size: 55pt;
+}
+section#keepcalm-content .info {
+  display: block;
+  padding: 5px;
+}
+section#keepcalm-content .info h4 {
+  font-weight: 200;
+}

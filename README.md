@@ -27,6 +27,8 @@ Todos os serviços podem ser localizados e iniciados a partir da pasta *main-ser
     - $ mongod
  - Deve-se incluir mais memória ao V8 para rodar o algoritmo:
     - $ node --max-old-space-size=4096 classifier.js
+ - Para rodar no modo de teste (utiliza apenas 500 registros do banco)
+    - $ NODE_ENV=test node classifier.js
     
     
 ### Conclusões Prévias
