@@ -1,12 +1,14 @@
-/**
- *
- * @param color to paint the icon
- * @param tab   the tab of the brawser to set the icon
- */
+/*
+* This script manages the communication between the popup and the extension main Javascript
+* */
 
 let results = null;
 
-
+/**
+ *
+ * @param color to paint the icon
+ * @param tab the tab of the brawser to set the icon
+ */
 function alterIcon(color, tab) {
 	chrome.browserAction.setIcon(
 		{

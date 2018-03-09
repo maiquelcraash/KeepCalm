@@ -1,6 +1,6 @@
-/**
- * Created by maiquel on 15/02/18.
- */
+/*
+* This script checks the user input and send data do server
+* */
 
 (function () {
 	"use strict";
