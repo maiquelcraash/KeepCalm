@@ -21,6 +21,9 @@ Todos os serviços podem ser localizados e iniciados a partir da pasta *main-ser
  - **classifier.js**
     - Responsável por treinar os algoritmos e classificar textos requeridos
     - Cria um servidor que escutará na porta indicada no arquivo *config/properties.js*
+ - **server.js**
+    - Responsável por tratar as requisções provenientes das extenções.
+    - Cria um servidor que escutará na porta indicada no arquivo *config/properties.js*
 
 ### Informações adicionais
  - Deve-se iniciar o mongoDB previamente após configurar sua URL e porta no arquivo *config/properties.js*:

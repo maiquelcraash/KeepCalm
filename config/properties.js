@@ -3,41 +3,59 @@
  */
 
 (function () {
-	"use strict";
+		"use strict";
 
-	/* Server Settings */
-	exports.CLASSIFIER_SERVER_PORT = 8082;
-	exports.CLASSIFIER_HOST = "localhost";
-	exports.WEB_SERVER_PORT = 8083;
-	exports.WEB_SERVER_HOST = "localhost";
-	exports.BODY_LIMIT = "100kb";
+		/* Server Settings */
+		exports.BODY_LIMIT = "100kb";
 
-	/* Twitter Authentication */
-	exports.TWITTER_KEY = 'BxiQLE4OPPmmRvgw5aC9yKqST';
-	exports.TWITTER_SECRET = 'LJSKJESeB7NV9SxBbe7QmYVl9bqMpQIIiZKnHDSltQYsUDlliI';
-	exports.TWITTER_TOKEN = '1539136728-7L8QdVnN0y2BKJ4nJjRtuxwONRBsIHiSXyjHFgM';
-	exports.TWITTER_TOKEN_SECRET = 'mOauAa9SJEOjmF2JQWiYVqn8ijwMHbsFsEK3kRYRVEJNs';
+		if (process.env.NODE_ENV === "development") {
+			exports.CLASSIFIER_SERVER_PORT = 8082;
+			exports.CLASSIFIER_HOST = "localhost";
+			exports.WEB_SERVER_PORT = 8083;
+			exports.WEB_SERVER_HOST = "localhost";
 
-	/* Miner Config */
-	exports.HANGRY_WORDS = [
-		'fdp',
-		'caralho',
-		'merda',
-		'bosta',
-		'porra',
-		'puta',
-		'foder'
-	];
+			exports.MONGODB_CONFIG = {
+				"mongoUrl": "mongodb://localhost:27017/KeepCalm",
+			};
+		}
 
-	exports.MONGODB_CONFIG = {
-		"mongoUrl": "mongodb://localhost:27017/KeepCalm",
-	};
+		else if (process.env.NODE_ENV === "production") {
+			exports.CLASSIFIER_SERVER_PORT = 11107;
+			exports.CLASSIFIER_HOST = "node161773-env-0316101.jelasticlw.com.br";
+			exports.WEB_SERVER_PORT = 11129;
+			exports.WEB_SERVER_HOST = "node161774-env-4978347.jelasticlw.com.br";
 
-	/* Pre-processor Config */
-	exports.EXCLUDE_RULES = ['PREP', 'CONJCOORD', 'CONJSUB', 'ADV', 'PPS', 'ART', 'PTRA', 'PREP+ART', 'PPOA', 'PPOA', 'PR'];
-	exports.TRASH_WORDS = ['d', 'q', 'p', 'jah', 'tbm', 'soh', 'msm', 'qm', 'vc'];
-	exports.TRASH_SYMBOLS = ['@', 'kk', 'hehe', 'shua', 'ahh', 'ahua', 'http', 'haha', '#', 'R$', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+			exports.MONGODB_CONFIG = {
+				"mongoUrl": "mongodb://node161772-env-0316101.jelasticlw.com.br:11125/KeepCalm",
+			};
 
-	/* Classifier Config */
-	exports.EFFECTIVE_PERCENTUAL = 75;
-}());
+		}
+
+		/* Twitter Authentication */
+		exports.TWITTER_KEY = 'BxiQLE4OPPmmRvgw5aC9yKqST';
+		exports.TWITTER_SECRET = 'LJSKJESeB7NV9SxBbe7QmYVl9bqMpQIIiZKnHDSltQYsUDlliI';
+		exports.TWITTER_TOKEN = '1539136728-7L8QdVnN0y2BKJ4nJjRtuxwONRBsIHiSXyjHFgM';
+		exports.TWITTER_TOKEN_SECRET = 'mOauAa9SJEOjmF2JQWiYVqn8ijwMHbsFsEK3kRYRVEJNs';
+
+		/* Miner Config */
+		exports.HANGRY_WORDS = [
+			'fdp',
+			'caralho',
+			'merda',
+			'bosta',
+			'porra',
+			'puta',
+			'foder'
+		];
+
+
+		/* Pre-processor Config */
+		exports.EXCLUDE_RULES = ['PREP', 'CONJCOORD', 'CONJSUB', 'ADV', 'PPS', 'ART', 'PTRA', 'PREP+ART', 'PPOA', 'PPOA', 'PR'];
+		exports.TRASH_WORDS = ['d', 'q', 'p', 'jah', 'tbm', 'soh', 'msm', 'qm', 'vc'];
+		exports.TRASH_SYMBOLS = ['@', 'kk', 'hehe', 'shua', 'ahh', 'ahua', 'http', 'haha', '#', 'R$', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+
+		/* Classifier Config */
+		exports.EFFECTIVE_PERCENTUAL = 75;
+	}
+	()
+);
