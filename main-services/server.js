@@ -62,7 +62,7 @@
 		classifierRequest.on('error', (e) => {
 			classifierRequest.status = 400;
 			if (e.code === "ECONNREFUSED") {
-				serverRes.send({error: "Classifier is offline"})
+				serverRes.send({error: e.message})
 			}
 			else {
 				serverRes.send(e.message);
