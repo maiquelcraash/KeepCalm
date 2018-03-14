@@ -10,6 +10,7 @@
 
 		if (process.env.NODE_ENV === "development") {
 			exports.CLASSIFIER_SERVER_PORT = 8082;
+			exports.CLASSIFIER_SERVER_PUBLIC_PORT = 8082;
 			exports.CLASSIFIER_HOST = "localhost";
 			exports.WEB_SERVER_PORT = 8083;
 			exports.WEB_SERVER_HOST = "localhost";
@@ -21,7 +22,7 @@
 
 		else if (process.env.NODE_ENV === "production") {
 			exports.CLASSIFIER_SERVER_PORT = 8082;
-			exports.CLASSIFIER_SERVER_PUBLIC_PORT = 11107;
+			exports.CLASSIFIER_SERVER_PUBLIC_PORT = 8082;
 			exports.CLASSIFIER_HOST = "node161773-env-0316101.jelasticlw.com.br";
 			exports.WEB_SERVER_PORT = 8083;
 			exports.WEB_SERVER_HOST = "node161774-env-4978347.jelasticlw.com.br";
