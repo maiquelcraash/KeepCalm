@@ -26,7 +26,7 @@
 			exports.WEB_SERVER_HOST = "node161774-env-4978347.jelasticlw.com.br";
 
 			exports.MONGODB_CONFIG = {
-				"mongoUrl": "mongodb://191.252.81.56:27017/KeepCalm",
+				"mongoUrl": "mongodb://admin:KKEtsd96234@191.252.81.56:27017/KeepCalm",
 			};
 
 		}
