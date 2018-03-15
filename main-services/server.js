@@ -40,7 +40,7 @@
 
 		let options = {
 			host: properties.CLASSIFIER_HOST,
-			port: properties.CLASSIFIER_SERVER_PUBLIC_PORT,
+			port: properties.CLASSIFIER_SERVER_PORT,
 			method: 'POST',
 			path: "/classify",
 			headers: {

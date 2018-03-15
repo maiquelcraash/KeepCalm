@@ -4,10 +4,25 @@
 
 (function () {
 	"use strict";
-	let serverHost = "http://localhost:8083/classify";
+	let serverHost = "https://keepcalm.acml.com.br/classify";
 
 	//get all input fields and apply listener
 	let inputFields = document.querySelectorAll("input, textarea");
+
+	inputFields = Array.prototype.slice.call(inputFields);
+
+	//filter only textareas and no confidential fields
+	inputFields = inputFields.filter((field) => {
+		if (field.tagName === "textarea") {
+			return true
+		}
+		else if (field.getAttribute("type") === "text") {
+			return true;
+		}
+		return false;
+	});
+
+	//apply input listener on each field
 	inputFields.forEach((inputField) => {
 		inputField.addEventListener("input", debounce(getClassification, 2000));
 	});

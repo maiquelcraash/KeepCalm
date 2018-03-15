@@ -75,7 +75,7 @@ function clearClassList(element) {
  * @returns {Element} the feedback button
  */
 function createFeedbackButton(type, activityID) {
-	const serverHost = "http://localhost:8083/feedback";
+	const serverHost = "https://keepcalm.acml.com.br/feedback";
 	let feedback;
 
 	const feedbackBtn = document.createElement("button");
