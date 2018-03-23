@@ -1,17 +1,24 @@
 {
   "manifest_version": 2,
-  "name": "KeepCalm",
+  "name": "KeepCalm Beta 0.8",
   "description": "Detecção de Agressividade",
-  "version": "1.0",
+  "version": "0.8",
   "browser_action": {
     "default_popup": "popup.html",
-    "default_title": "Clique aqui para ver um lindo gatinho!"
+    "default_title": "KeepCalm",
+    "default_icon": "img/icon19x19.png"
+  },
+  "icons": {
+    "16": "img/favicon.png",
+    "48": "img/icon48x48.png",
+    "128": "img/icon128x128.png"
   },
   "permissions": [
     "activeTab",
     "https://ajax.googleapis.com/",
     "declarativeContent",
-    "http://*/*", "https://*/*"
+    "http://*/*",
+    "https://*/*"
   ],
   "content_scripts": [
     {

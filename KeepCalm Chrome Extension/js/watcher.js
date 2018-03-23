@@ -9,6 +9,7 @@
 	//get all input fields and apply listener
 	let inputFields = document.querySelectorAll("input, textarea");
 
+	//convert NodeList to an array of Nodes
 	inputFields = Array.prototype.slice.call(inputFields);
 
 	//filter only textareas and no confidential fields
@@ -26,6 +27,7 @@
 	inputFields.forEach((inputField) => {
 		inputField.addEventListener("input", debounce(getClassification, 2000));
 	});
+
 
 	//inject CSS style on page
 	let style = document.createElement('style');
@@ -84,6 +86,7 @@
 	 * @returns {Function}
 	 */
 	function debounce(func, wait, immediate) {
+		console.log(this);
 		let timeout;
 		return function () {
 			let context = this;

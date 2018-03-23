@@ -26,7 +26,7 @@ function createIconImageData(color) {
 	let ctx = canvas.getContext("2d");
 	ctx.fillStyle = color;
 	ctx.beginPath();
-	ctx.ellipse(9.5, 9.5, 9.5, 9.5, 0, 0, 2 * Math.PI);
+	ctx.ellipse(9.5, 9.5, 8.5, 8.5, 0, 0, 2 * Math.PI);
 	ctx.stroke();
 	ctx.closePath();
 	ctx.fill();
