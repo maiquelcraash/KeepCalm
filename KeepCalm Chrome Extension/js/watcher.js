@@ -6,44 +6,25 @@
 	"use strict";
 	let serverHost = "https://keepcalm.acml.com.br/classify";
 
-	//get all input fields and apply listener
-	let inputFields = document.querySelectorAll("input, textarea");
-
-	//convert NodeList to an array of Nodes
-	inputFields = Array.prototype.slice.call(inputFields);
-
-	//filter only textareas and no confidential fields
-	inputFields = inputFields.filter((field) => {
-		if (field.tagName === "textarea") {
-			return true
-		}
-		else if (field.getAttribute("type") === "text" || field.getAttribute("type") === "") {
-			return true;
-		}
-		return false;
-	});
-
-	//apply input listener on each field
-	inputFields.forEach((inputField) => {
-		inputField.addEventListener("input", debounce(getClassification, 2000));
-	});
-
-
-	//inject CSS style on page
-	let style = document.createElement('style');
-	style.type = 'text/css';
-	style.innerHTML = '.keepcalm-agressive { border-color: red; border-width: 3px; border-radius: 3px; }';
-	document.getElementsByTagName('head')[0].appendChild(style);
-
-
 	/**
 	 * Makes a request to server to obtain classification for the text inputed on target element and event, then call the browser to update the icon and popup
 	 */
-	function getClassification() {
+	let getClassification = debounce(function(e) {
 		console.log("Obtendo classificação...");
 
-		let targetField = this;
-		let targetText = this.value;
+		let targetField = e.target;
+		let targetText = targetField.value;
+
+		if (targetField.tagName === "textarea") {
+			//do nothing
+		}
+		else if (targetField.getAttribute("type") === "text" || targetField.getAttribute("type") === "") {
+			//do nothing
+		}
+		else {
+			//skip event
+			return
+		}
 
 		if (targetText) {
 			let xmlHttp = new XMLHttpRequest();
@@ -76,7 +57,40 @@
 			setIconOnTab("gray");
 			setResultsOnPopup(null);
 		}
-	}
+	}, 3000);
+
+	// //get all input fields and apply listener
+	// let inputFields = document.querySelectorAll("input, textarea");
+	//
+	// //convert NodeList to an array of Nodes
+	// inputFields = Array.prototype.slice.call(inputFields);
+	//
+	// //filter only textareas and no confidential fields
+	// inputFields = inputFields.filter((field) => {
+	// 	if (field.tagName === "textarea") {
+	// 		return true
+	// 	}
+	// 	else if (field.getAttribute("type") === "text" || field.getAttribute("type") === "") {
+	// 		return true;
+	// 	}
+	// 	return false;
+	// });
+	//
+	// //apply input listener on each field
+	// inputFields.forEach((inputField) => {
+	// 	inputField.addEventListener("input", getClassification);
+	// });
+
+	window.addEventListener("keypress", getClassification);
+
+
+	//inject CSS style on page
+	let style = document.createElement('style');
+	style.type = 'text/css';
+	style.innerHTML = '.keepcalm-agressive { border-color: red; border-width: 3px; border-radius: 3px; }';
+	document.getElementsByTagName('head')[0].appendChild(style);
+
+
 
 	/**
 	 * REF: https://davidwalsh.name/javascript-debounce-function
