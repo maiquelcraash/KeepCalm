@@ -13,12 +13,24 @@
 		decoder = new StringDecoder('utf8');
 
 
+	let dir = __dirname.split("/");
+	dir.pop();
+	const root = dir.join("/");
+
 	let app = express();
 	app.server = http.createServer(app);
 
+	//Body Parser
 	app.use(bodyParser.json({
 		limit: properties.BODY_LIMIT
 	}));
+
+	//Arquivos estáticos acessíveis a todos
+	app.use(express.static(root + '/public'));
+	app.use("/css",  express.static(root + '/public/css'));
+	app.use("/js", express.static(root + '/public/js'));
+	app.use("/img",  express.static(root + '/public/img'));
+
 
 	app.server.listen(properties.WEB_SERVER_PORT);
 	console.log("Server started on port " + properties.WEB_SERVER_PORT);
@@ -31,6 +43,11 @@
 	});
 
 	/* Server Routes */
+	app.get('/', (req, res) => {
+		res.sendFile(root + '/public/index.html');
+	});
+
+
 	app.post('/classify', (req, serverRes) => {
 		let target = req.body.target;
 

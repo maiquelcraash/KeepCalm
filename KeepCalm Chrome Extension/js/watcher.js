@@ -17,7 +17,7 @@
 		if (field.tagName === "textarea") {
 			return true
 		}
-		else if (field.getAttribute("type") === "text") {
+		else if (field.getAttribute("type") === "text" || field.getAttribute("type") === "") {
 			return true;
 		}
 		return false;
