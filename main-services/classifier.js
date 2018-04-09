@@ -52,10 +52,12 @@
 
 		activityLogController.updateActivity(activityID, feedback, (err) => {
 			if (err) {
+				console.error("Error to handle activity: " + activityID);
 				res.status(400);
 				res.json(err);
 			}
 			else {
+				console.log("Feedback added to activity: " + activityID);
 				res.status(201);
 				res.json({"Status": "OK"});
 			}
