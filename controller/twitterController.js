@@ -82,8 +82,8 @@
 				}
 			});
 
-			if(process.env.NODE_ENV === "development"){
-				query.limit(500);
+			if (properties.QUERY_LIMIT > 0) {
+				query.limit(properties.QUERY_LIMIT);
 			}
 			query.exec();
 		};

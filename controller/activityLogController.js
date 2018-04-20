@@ -5,7 +5,8 @@
 (function () {
 	"use strict";
 
-	const activityLogModel = require("../model/activityLogModel");
+	const activityLogModel = require("../model/activityLogModel"),
+		properties = require('../config/properties');
 
 	let activityLogController = () => {
 
@@ -31,9 +32,27 @@
 			activityLogModel.findByIdAndUpdate(activityID, {feedback: feedback}, callback);
 		};
 
+		let getFeedbackActivities = ((callback) => {
+			const query = activityLogModel.find({ $or:[ {feedback:true}, {feedback:false}]}, (err, activities) => {
+					if (err) {
+						console.log(err)
+					}
+					else {
+						callback(activities);
+					}
+			});
+
+			if (properties.QUERY_LIMIT > 0) {
+				query.limit(properties.QUERY_LIMIT);
+			}
+			query.exec();
+		});
+
+
 		return {
 			createActivity: createActivity,
-			updateActivity: updateActivity
+			updateActivity: updateActivity,
+			getFeedbackActivities: getFeedbackActivities
 		}
 
 	};

@@ -9,6 +9,7 @@
 		twitterController = require('./twitterController'),
 		POSTaggerController = require('./POSTaggerController'),
 		activityLogController = require('./activityLogController'),
+		preProcessorController = require('./preProcessorController'),
 		properties = require('../config/properties');
 
 	let classifier;
@@ -71,14 +72,40 @@
 			twitterController.getPosTweetsFromDatabase(params, (posTweets) => {
 
 				posTweets.forEach((tweet) => {
-					console.log(tweet.id);
+					console.log("Adding to train group - tweet id: " + tweet.id);
 					classifier.addDocument(tweet.pos_text, tweet.classification);
 				});
 
-				console.log("\nTraining algorithm...");
-				classifier.train();
-				console.log("\nReady!");
-				callback();
+				console.log("\n");
+
+				activityLogController.getFeedbackActivities((activities) => {
+					activities.forEach((activity) => {
+						console.log("Adding to train group - activity id: " + activity.id);
+
+						let trainText = preProcessorController.preProcessText(activity.text);
+						let trainClassification;
+						let classification = activity.result.effectiveResult;
+
+						if (activity.feedback === true) {
+							trainClassification = classification;
+						}
+						else {
+							if (classification === "Agressivo"){
+								trainClassification = "Não Agressivo";
+							}
+							else {
+								trainClassification = "Agressivo";
+							}
+						}
+
+						classifier.addDocument(trainText, trainClassification);
+					})
+
+					console.log("\nTraining algorithm...");
+					classifier.train();
+					console.log("\nReady!");
+					callback();
+				});
 			});
 		}
 

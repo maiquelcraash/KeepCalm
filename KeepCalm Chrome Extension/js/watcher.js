@@ -59,27 +59,6 @@
 		}
 	}, 3000);
 
-	// //get all input fields and apply listener
-	// let inputFields = document.querySelectorAll("input, textarea");
-	//
-	// //convert NodeList to an array of Nodes
-	// inputFields = Array.prototype.slice.call(inputFields);
-	//
-	// //filter only textareas and no confidential fields
-	// inputFields = inputFields.filter((field) => {
-	// 	if (field.tagName === "textarea") {
-	// 		return true
-	// 	}
-	// 	else if (field.getAttribute("type") === "text" || field.getAttribute("type") === "") {
-	// 		return true;
-	// 	}
-	// 	return false;
-	// });
-	//
-	// //apply input listener on each field
-	// inputFields.forEach((inputField) => {
-	// 	inputField.addEventListener("input", getClassification);
-	// });
 
 	window.addEventListener("keypress", getClassification);
 

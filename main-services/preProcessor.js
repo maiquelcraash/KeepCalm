@@ -19,7 +19,7 @@
 	twitterController.getRawTweetsFromDatabase(params, (rawTweets) => {
 		console.log("Getting tweets from database...");
 		rawTweets.forEach((tweet) => {
-			let posTweet = preProcessorController.preProcess(tweet);
+			let posTweet = preProcessorController.preProcessTweet(tweet);
 			preProcessorController.savePosTweetOnDatabase(posTweet);
 			tweet.processed = true;
 			twitterController.updateRawTweet(tweet);

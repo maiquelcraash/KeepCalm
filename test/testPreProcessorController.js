@@ -25,7 +25,7 @@
 			rawTweet.classification = "Agressivo";
 			rawTweet.datetime = new Date();
 
-			posTweet = preProcessorController.preProcess(rawTweet);
+			posTweet = preProcessorController.preProcessTweet(rawTweet);
 			assert.equal(posTweet.pos_text, "test normal outr palavr ouv loucur");
 			assert.equal(posTweet.original_text, rawTweet.text);
 			assert.equal(posTweet.classification, rawTweet.classification);

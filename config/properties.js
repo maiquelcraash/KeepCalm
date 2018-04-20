@@ -7,6 +7,7 @@
 
 		/* Server Settings */
 		exports.BODY_LIMIT = "100kb";
+		exports.QUERY_LIMIT = -1;					//-1 = no limit
 
 		if (process.env.NODE_ENV === "development") {
 			exports.CLASSIFIER_SERVER_PORT = 8082;
@@ -15,7 +16,7 @@
 			exports.WEB_SERVER_HOST = "localhost";
 
 			exports.MONGODB_CONFIG = {
-				"mongoUrl": "mongodb://localhost:27017/KeepCalm",
+				"mongoUrl": "mongodb://localhost:27017/KeepCalm_Jelastic_180418",
 			};
 		}
 
