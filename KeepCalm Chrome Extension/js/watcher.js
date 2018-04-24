@@ -13,18 +13,23 @@
 		console.log("Obtendo classificação...");
 
 		let targetField = e.target;
-		let targetText = targetField.value;
+		let targetText;
 
-		if (targetField.tagName === "textarea") {
-			//do nothing
+		if (targetField.tagName.toLowerCase() === "textarea") {
+			targetText = targetField.value;
 		}
-		else if (targetField.getAttribute("type") === "text" || targetField.getAttribute("type") === "") {
-			//do nothing
+		else if (targetField.getAttribute("type").toLowerCase() === "text" || targetField.getAttribute("type").toLowerCase() === "") {
+			targetText = targetField.value;
 		}
+		else if (targetField.tagName.toLowerCase() === "div") {
+			targetText = targetField.innerText;
+		}
+
 		else {
 			//skip event
 			return
 		}
+
 
 		if (targetText) {
 			let xmlHttp = new XMLHttpRequest();
