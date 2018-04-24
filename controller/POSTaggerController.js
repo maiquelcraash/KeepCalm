@@ -7,8 +7,8 @@
 
 	let natural = require("natural");
 
-	let rulesFilename = "../res/PosTagger/pt_br-ruleset.txt",
-		lexiconFilename = "../res/PosTagger/pt_br-lexicon.json",
+	let rulesFilename = __dirname + "/../res/PosTagger/pt_br-ruleset.txt",
+		lexiconFilename = __dirname + "/../res/PosTagger/pt_br-lexicon.json",
 		defaultCategory = 'NN';
 
 	let lexicon = new natural.Lexicon(lexiconFilename, defaultCategory);
