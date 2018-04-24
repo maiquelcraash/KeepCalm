@@ -51,8 +51,8 @@
 
 
 		/* Pre-processor Config */
-		exports.EXCLUDE_RULES = ['PREP', 'CONJCOORD', 'CONJSUB', 'ADV', 'PPS', 'ART', 'PTRA', 'PREP+ART', 'PPOA', 'PPOA', 'PR'];
-		exports.TRASH_WORDS = ['d', 'q', 'p', 'jah', 'tbm', 'soh', 'msm', 'qm', 'vc'];
+		exports.EXCLUDE_RULES = ['PREP', 'CONJCOORD', 'CONJSUB', 'PPS', 'ART', 'PREP+ART', 'PPOA', 'PPOA', 'PR'];
+		exports.TRASH_WORDS = ['d', 'q', 'p', 'jah', 'tbm', 'soh', 'msm', 'qm'];
 		exports.TRASH_SYMBOLS = ['@', 'kk', 'hehe', 'shua', 'ahh', 'ahua', 'http', 'haha', '#', 'R$', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
 		/* Classifier Config */
