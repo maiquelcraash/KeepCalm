@@ -7,7 +7,7 @@
 
 	/* Server Settings */
 	exports.BODY_LIMIT = "100kb";
-	exports.QUERY_LIMIT = 20;
+	exports.QUERY_LIMIT = 2000000;
 
 	/* Classifier Config */
 	exports.EFFECTIVE_PERCENTUAL = 71;			// Ponto de corte entre agressivo e não agressivo
