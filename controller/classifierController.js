@@ -66,7 +66,12 @@
 			console.log("Adding documents...\n");
 
 			let params = {
-				// processed: false
+				query: {
+					// processed: false
+				},
+				options: {
+					limit: properties.QUERY_LIMIT
+				}
 			};
 
 			twitterController.getPosTweetsFromDatabase(params, (posTweets) => {
@@ -90,7 +95,7 @@
 							trainClassification = classification;
 						}
 						else {
-							if (classification === "Agressivo"){
+							if (classification === "Agressivo") {
 								trainClassification = "Não Agressivo";
 							}
 							else {

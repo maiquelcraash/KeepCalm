@@ -62,18 +62,24 @@
 		};
 
 		let getRawTweetsFromDatabase = (params, callback) => {
-			rawTweetModel.find(params, (err, tweets) => {
+			const query = rawTweetModel.find(params.query, (err, tweets) => {
 				if (err) {
-					console.log(err)
+					console.error(err);
+				}
+				else if(tweets.length === 0){
+					console.error("No results");
 				}
 				else {
 					callback(tweets);
 				}
-			})
+			});
+
+			query.setOptions(params.options);
+			query.exec();
 		};
 
 		let getPosTweetsFromDatabase = (params, callback) => {
-			const query = posTweetModel.find(params, (err, tweets) => {
+			const query = posTweetModel.find(params.query, (err, tweets) => {
 				if (err) {
 					console.log(err)
 				}
@@ -82,9 +88,7 @@
 				}
 			});
 
-			if (properties.QUERY_LIMIT > 0) {
-				query.limit(properties.QUERY_LIMIT);
-			}
+			query.setOptions(params.options);
 			query.exec();
 		};
 

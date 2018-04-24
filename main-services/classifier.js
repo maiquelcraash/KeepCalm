@@ -22,11 +22,19 @@
 		limit: properties.BODY_LIMIT
 	}));
 
-	classifierController.trainBayesClassifier(() => {
-		// classifierController.trainLogisticRegressionClassifier(() => {
-		app.server.listen(properties.CLASSIFIER_SERVER_PORT);
-		console.log("Server started on port " + properties.CLASSIFIER_SERVER_PORT);
-	});
+	if (properties.CLASSIFIER_ALGORITHM === "NB") {
+		classifierController.trainBayesClassifier(() => {
+			app.server.listen(properties.CLASSIFIER_SERVER_PORT);
+			console.log("Naive Bayes Classifier started on port " + properties.CLASSIFIER_SERVER_PORT);
+		});
+	}
+
+	else if (properties.CLASSIFIER_ALGORITHM === "LR") {
+		classifierController.trainLogisticRegressionClassifier(() => {
+			app.server.listen(properties.CLASSIFIER_SERVER_PORT);
+			console.log("Logistic Regression Classifier started on port " + properties.CLASSIFIER_SERVER_PORT);
+		});
+	}
 
 	app.all('*', (req, res, next) => {
 		res.header('Access-Control-Allow-Origin', '*');

@@ -7,13 +7,19 @@
 
 	const preProcessorController = require('../controller/preProcessorController'),
 		twitterController = require('../controller/twitterController'),
+		propertires = require('../config/properties'),
 		db = require('../config/db');
 
 	db.getConnection();
 
 	//process only not processed items
 	let params = {
-		processed: false
+		query : {
+			processed: true
+		},
+		options: {
+			limit: propertires.QUERY_LIMIT
+		}
 	};
 
 	twitterController.getRawTweetsFromDatabase(params, (rawTweets) => {
