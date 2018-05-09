@@ -11,6 +11,7 @@ img.logo {
   margin-right: auto;
   max-width: 250px;
 }
+p,
 h3,
 h4,
 h5 {
@@ -43,6 +44,14 @@ section#keepcalm-content .info {
 }
 section#keepcalm-content .info h4 {
   font-weight: 200;
+}
+section#keepcalm-content .info p {
+  font-size: 10pt;
+}
+section#keepcalm-content .info .feedback .center {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
 }
 section#keepcalm-content .info .feedback .feedback-btn {
   color: white;

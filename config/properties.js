@@ -10,7 +10,7 @@
 	exports.QUERY_LIMIT = 2000000;
 
 	/* Classifier Config */
-	exports.EFFECTIVE_PERCENTUAL = 71;			// Ponto de corte entre agressivo e não agressivo
+	exports.EFFECTIVE_PERCENTUAL = 65;			// Ponto de corte entre agressivo e não agressivo
 	exports.CLASSIFIER_ALGORITHM = "NB";		//"NB" (Nayve Bayes) or "LR" (Linear Regression)
 
 	if (process.env.NODE_ENV === "development") {

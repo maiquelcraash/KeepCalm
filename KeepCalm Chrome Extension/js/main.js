@@ -19,9 +19,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 			//creates results components
 			const titleElement = document.createElement('div');
-			titleElement.innerHTML = `O texto <b> "${response.text}"</b> foi classificado como:"`;
+			titleElement.innerHTML = `O texto <b> "${response.text}"</b> foi classificado como:`;
 			const resultElement = document.createElement('h3');
-			resultElement.innerText = response.effectiveResult + " (" + response.percentuals[response.effectiveResult] + "%)";
+			resultElement.innerText = response.effectiveResult;
+
+			const percentual = document.createElement('p');
+			percentual.innerText = "(Percentual de agressividade: " + response.percentuals["Agressivo"] + "%)";
+
 
 			if (response.effectiveResult === "Agressivo") {
 				clearClassList(statusIcon);
@@ -34,14 +38,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 			//creates feedback buttons
 			let feedbackDiv = document.createElement("div");
+			let div = document.createElement("div");
+
+			div.classList.add("center");
+			div.appendChild(createFeedbackButton("AGREE", activityID));
+			div.appendChild(createFeedbackButton("DISAGREE", activityID));
+
 			feedbackDiv.classList.add("feedback");
-			feedbackDiv.appendChild(createFeedbackButton("AGREE", activityID));
-			feedbackDiv.appendChild(createFeedbackButton("DISAGREE", activityID));
+			feedbackDiv.append(div);
 
 			//puts all together
 			infoContainer.innerHTML = "";
 			infoContainer.appendChild(titleElement);
 			infoContainer.appendChild(resultElement);
+			infoContainer.appendChild(percentual);
 			infoContainer.appendChild(feedbackDiv);
 		}
 		else {

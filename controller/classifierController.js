@@ -94,7 +94,7 @@
 						if (activity.feedback === true) {
 							trainClassification = classification;
 						}
-						else {
+						else if (activity.feedback === false) {
 							if (classification === "Agressivo") {
 								trainClassification = "Não Agressivo";
 							}
@@ -104,7 +104,7 @@
 						}
 
 						classifier.addDocument(trainText, trainClassification);
-					})
+					});
 
 					console.log("\nTraining algorithm...");
 					classifier.train();
