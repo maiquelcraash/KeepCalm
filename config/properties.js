@@ -11,7 +11,7 @@
 
 	/* Classifier Config */
 	exports.EFFECTIVE_PERCENTUAL = 65;			// Ponto de corte entre agressivo e não agressivo
-	exports.CLASSIFIER_ALGORITHM = "NB";		//"NB" (Nayve Bayes) or "LR" (Linear Regression)
+	exports.CLASSIFIER_ALGORITHM = "LR";		//"NB" (Nayve Bayes) or "LR" (Linear Regression)
 
 	if (process.env.NODE_ENV === "development") {
 		exports.CLASSIFIER_SERVER_PORT = 8082;

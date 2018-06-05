@@ -32,19 +32,21 @@
 		 * Process individual texts
 		 * @param text to processs
 		 */
+
 		let preProcessText = (text) => {
 			let processedText = text;
 
-			//removes trash
+			//Remove resíduos textuais como "ahuahua", "kkkk", "http", etc
 			processedText = removeTrashWords(processedText);
 
-			//removes symbols
+			//Remove simbolos e números
 			processedText = removeSymbols(processedText);
 
-			//remove the stopwords
-			processedText = removeIrrelevantWorlds(processedText);
+			// Efetua Análise Sintática e remove palavras sintaticamente
+			// irrelevantes para a detecção de emoções
+			processedText = removeIrrelevantWords(processedText);
 
-			//stemmer
+			//Análise Léxica, extração dos radicais
 			processedText = steemer(processedText);
 
 			return processedText;
@@ -134,7 +136,7 @@
 	 * @param str - target string
 	 * @returns {string} a new string without irrelevant words based on pt-br sintax rules
 	 */
-	function removeIrrelevantWorlds(str) {
+	function removeIrrelevantWords(str) {
 		let words = [];
 
 		let tags = posTaggerController.getPOSTags(str);
